@@ -87,6 +87,15 @@ var UIController = (function(){
         //Insert the HTML into DOM
         document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
       },
+      clearFields: function(){
+        document.querySelector(DOMstrings.inputDescription).value = '';
+        document.querySelector(DOMstrings.inputValue).value = '';
+        /*
+         var fields = document.querySelectorAll(DOMstrings.inputDescription + ',' + DOMstrings.inputValue);
+         var fieldsArr = Array.prototype.slice.call(fields);
+         fieldsArr.forEach((current, index, array) => current.value = '';)
+        */
+      },
       //Making DOMStrings object from one module(controller) to another
       //making it public by creating function inside return { }
       getDOMstrings: function(){
@@ -115,13 +124,14 @@ var appController = (function(budgetCtrl, UICtrl) {
         var input, newItem;
         //1.Get the field input data
         input = UICtrl.getInput();
-         
        //2.Add the item to the budget Controller
         newItem = budgetCtrl.addItem(input.type, input.description, input.value);
        //3.Add the item to the UI
        UICtrl.addListItem(newItem, input.type);
-       //4.calculate the budget
-       //5.display the budget
+       //4.Clear the fields
+       UICtrl.clearFields();
+       //5.calculate the budget
+       //6.display the budget
     };
     return {
       init: function(){
